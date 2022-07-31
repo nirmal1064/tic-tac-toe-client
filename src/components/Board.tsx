@@ -14,7 +14,7 @@ import {
   RoomType,
   START_GAME
 } from "../utils";
-import { useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { useBoard } from "../context/BoardProvider";
 import { useSocket } from "../context/SocketProvider";
 import { useUser } from "../context/UserProvider";
@@ -23,10 +23,10 @@ import { ActionType } from "../reducers/userReducer";
 import GridItemButton from "./GridItemButton";
 import Square from "./Square";
 
-const Board = () => {
+const Board: FC = () => {
   const socket = useSocket();
   const { state, dispatch } = useUser();
-  const { board, setBoard, bgColor } = useBoard();
+  const { board, setBoard, bgColor, setBgColor } = useBoard();
   const { roomId, symbol, userId, turn, started, userName } = state;
   const [gameOver, setGameOver] = useState(false);
   const [winner, setWinner] = useState(false);
@@ -62,6 +62,8 @@ const Board = () => {
     setGameOver(false);
     setWinner(false);
     setRematchRequest(false);
+    setRematchRequestSent(false);
+    setBgColor(data.bgColor);
     setBoard(data.board);
     let payload: { symbol: "X" | "O"; turn: boolean };
     if (data.currentUser === userId) {
