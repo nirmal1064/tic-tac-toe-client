@@ -19,7 +19,9 @@ export const REMATCH_FAILURE = "REMATCH_FAILURE";
 
 export const USER_DEFAULT_VALUE: UserType = {
   userId: "",
-  userName: "",
+  name: "",
+  auth: false,
+  username: "",
   roomId: "",
   symbol: null,
   joined: false,

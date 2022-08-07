@@ -1,6 +1,8 @@
-import { UserType } from "../utils";
+import { UserType, USER_DEFAULT_VALUE } from "../utils";
 
 export enum ActionType {
+  Login,
+  LogOut,
   UpdateUser,
   UpdateRoom,
   GameStartMyTurn,
@@ -13,7 +15,7 @@ export enum ActionType {
 
 type UpdateUser = {
   type: ActionType.UpdateUser;
-  payload: { userId: string; userName: string };
+  payload: { userId: string; username: string };
 };
 
 type UpdateRoom = {
@@ -26,29 +28,29 @@ type UpdateSymbol = {
   payload: { symbol: "X" | "O" };
 };
 
-type GameStart = {
-  type: ActionType.GameStart;
+type GameStart = { type: ActionType.GameStart };
+
+type GameStartMyTurn = { type: ActionType.GameStartMyTurn };
+
+type UpdateTurn = { type: ActionType.UpdateTurn; payload: { turn: boolean } };
+
+type Login = {
+  type: ActionType.Login;
+  payload: { userId: string; username: string; auth: boolean; name: string };
 };
 
-type GameStartMyTurn = {
-  type: ActionType.GameStartMyTurn;
-};
-
-type UpdateTurn = {
-  type: ActionType.UpdateTurn;
-  payload: { turn: boolean };
-};
+type LogOut = { type: ActionType.LogOut };
 
 type NewGame = {
   type: ActionType.NewGame;
   payload: { symbol: "X" | "O"; turn: boolean };
 };
 
-type EndGame = {
-  type: ActionType.EndGame;
-};
+type EndGame = { type: ActionType.EndGame };
 
 export type UserActionTypes =
+  | Login
+  | LogOut
   | UpdateUser
   | UpdateRoom
   | UpdateSymbol
@@ -60,11 +62,15 @@ export type UserActionTypes =
 
 const userReducer = (state: UserType, action: UserActionTypes): UserType => {
   switch (action.type) {
+    case ActionType.Login:
+      return { ...state, ...action.payload };
+    case ActionType.LogOut:
+      return USER_DEFAULT_VALUE;
     case ActionType.UpdateUser:
       return {
         ...state,
         userId: action.payload.userId,
-        userName: action.payload.userName
+        username: action.payload.username
       };
     case ActionType.UpdateRoom:
       return {
@@ -74,26 +80,13 @@ const userReducer = (state: UserType, action: UserActionTypes): UserType => {
         symbol: action.payload.symbol
       };
     case ActionType.UpdateSymbol:
-      return {
-        ...state,
-        symbol: action.payload.symbol
-      };
+      return { ...state, symbol: action.payload.symbol };
     case ActionType.GameStart:
-      return {
-        ...state,
-        started: true
-      };
+      return { ...state, started: true };
     case ActionType.GameStartMyTurn:
-      return {
-        ...state,
-        started: true,
-        turn: true
-      };
+      return { ...state, started: true, turn: true };
     case ActionType.UpdateTurn:
-      return {
-        ...state,
-        turn: action.payload.turn
-      };
+      return { ...state, turn: action.payload.turn };
     case ActionType.NewGame:
       return {
         ...state,

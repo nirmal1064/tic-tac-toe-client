@@ -1,32 +1,23 @@
-import { customAlphabet } from "nanoid/async";
-import { useState } from "react";
+import { Typography } from "@mui/material";
+import { AxiosResponse } from "axios";
+import { useEffect, useState } from "react";
+import API from "../api";
 import { useUser } from "../context/UserProvider";
-import { ActionType } from "../reducers/userReducer";
-import GridItemButton from "./GridItemButton";
-import GridTextField from "./GridTextField";
 
 const Home = () => {
-  const [_userId, setUserId] = useState<string>("");
-  const [userName, setUserName] = useState<string>("");
-  const { dispatch } = useUser();
-  const createUser = async () => {
-    const nanoid = customAlphabet("0123456789abcdefghijklmnopqrstuvwxyz", 10);
-    const id = await nanoid();
-    setUserId(id);
-    dispatch({
-      type: ActionType.UpdateUser,
-      payload: { userId: id, userName }
+  const [msg, setMsg] = useState("");
+  const { state } = useUser();
+  console.log(state);
+
+  useEffect(() => {
+    API.get("/api/home").then((res: AxiosResponse) => {
+      setMsg(res.data.msg);
     });
-  };
+  }, []);
 
   return (
     <>
-      <GridTextField
-        value={userName}
-        label="Enter Your Name"
-        onChange={(e) => setUserName(e.target.value)}
-      />
-      <GridItemButton onClick={createUser} value="Enter" />
+      <Typography marginBottom={"10px"}>{msg}</Typography>
     </>
   );
 };

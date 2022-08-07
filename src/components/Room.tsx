@@ -20,7 +20,7 @@ import GridTextField from "./GridTextField";
 
 const Room = () => {
   const { state, dispatch } = useUser();
-  const { userId, userName } = state;
+  const { userId, username } = state;
   const socket = useSocket();
   const { setBgColor } = useBoard();
   const [roomId, setRoomId] = useState<string>("");
@@ -30,19 +30,13 @@ const Room = () => {
     const nanoid = customAlphabet(ALPHA_NUMERIC, 6);
     const newRoomId = await nanoid();
     setRoomId(newRoomId);
-    const obj = {
-      roomId: newRoomId,
-      userId
-    };
+    const obj = { roomId: newRoomId, userId };
     socket?.emit(JOIN, obj);
   };
 
   const joinRoom = () => {
     if (roomId === "") return;
-    const obj = {
-      roomId,
-      userId
-    };
+    const obj = { roomId, userId };
     socket?.emit(JOIN, obj);
   };
 
@@ -50,11 +44,7 @@ const Room = () => {
     setBgColor(result.bgColor);
     dispatch({
       type: ActionType.UpdateRoom,
-      payload: {
-        roomId: result.roomId,
-        joined: true,
-        symbol: result.symbol
-      }
+      payload: { roomId: result.roomId, joined: true, symbol: result.symbol }
     });
   };
 
@@ -80,7 +70,7 @@ const Room = () => {
 
   return (
     <>
-      <Typography marginBottom={"10px"}>Welcome {userName}</Typography>
+      <Typography marginBottom={"10px"}>Welcome {username}</Typography>
       <GridTextField
         value={roomId}
         label="Room ID"

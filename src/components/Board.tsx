@@ -27,7 +27,7 @@ const Board: FC = () => {
   const socket = useSocket();
   const { state, dispatch } = useUser();
   const { board, setBoard, bgColor, setBgColor } = useBoard();
-  const { roomId, symbol, userId, turn, started, userName } = state;
+  const { roomId, symbol, userId, turn, started, username } = state;
   const [gameOver, setGameOver] = useState(false);
   const [winner, setWinner] = useState(false);
   const [draw, setDraw] = useState(false);
@@ -156,7 +156,7 @@ const Board: FC = () => {
 
   return (
     <>
-      <Typography marginBottom={"10px"}>Welcome {userName}</Typography>
+      <Typography marginBottom={"10px"}>Welcome {username}</Typography>
       <Typography marginBottom={"10px"}>Room ID {roomId}</Typography>
       <Typography marginBottom={"10px"}>{message}</Typography>
       <div className="grid" style={{ marginBottom: "10px" }}>

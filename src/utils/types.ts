@@ -21,7 +21,9 @@ export type RoomType = {
 
 export type UserType = {
   userId: string;
-  userName: string;
+  name: string;
+  auth: boolean;
+  username: string;
   roomId: string;
   symbol: "X" | "O" | null;
   joined: boolean;
@@ -36,10 +38,7 @@ export type MakeMoveType = {
   symbol: "X" | "O";
 };
 
-export type GameOverType = {
-  winner: string | null;
-  draw: boolean;
-};
+export type GameOverType = { winner: string | null; draw: boolean };
 
 export type RematchType = { roomId: string };
 
