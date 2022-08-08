@@ -15,8 +15,9 @@ import { useSocket } from "../context/SocketProvider";
 import { useUser } from "../context/UserProvider";
 import { handlingStartGame } from "../helpers";
 import { ActionType } from "../reducers/userReducer";
-import GridItemButton from "./GridItemButton";
-import GridTextField from "./GridTextField";
+import GridItemButton from "../components/GridItemButton";
+import GridTextField from "../components/GridTextField";
+import { useNavigate } from "react-router-dom";
 
 const Room = () => {
   const { state, dispatch } = useUser();
@@ -25,6 +26,7 @@ const Room = () => {
   const { setBgColor } = useBoard();
   const [roomId, setRoomId] = useState<string>("");
   const [errMsg, setErrMsg] = useState<string>("");
+  const navigate = useNavigate();
 
   const createRoom = async () => {
     const nanoid = customAlphabet(ALPHA_NUMERIC, 6);
@@ -46,6 +48,7 @@ const Room = () => {
       type: ActionType.UpdateRoom,
       payload: { roomId: result.roomId, joined: true, symbol: result.symbol }
     });
+    navigate(`/game`, { replace: true });
   };
 
   const updateErrMsg = (msg: string): void => {

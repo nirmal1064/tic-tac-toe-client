@@ -5,8 +5,8 @@ import { useNavigate } from "react-router-dom";
 import API from "../api";
 import { useUser } from "../context/UserProvider";
 import { ActionType } from "../reducers/userReducer";
-import GridItemButton from "./GridItemButton";
-import GridTextField from "./GridTextField";
+import GridItemButton from "../components/GridItemButton";
+import GridTextField from "../components/GridTextField";
 
 const Login: FC = () => {
   const [username, setUsername] = useState("");

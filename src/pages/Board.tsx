@@ -20,8 +20,8 @@ import { useSocket } from "../context/SocketProvider";
 import { useUser } from "../context/UserProvider";
 import { handlingStartGame } from "../helpers";
 import { ActionType } from "../reducers/userReducer";
-import GridItemButton from "./GridItemButton";
-import Square from "./Square";
+import GridItemButton from "../components/GridItemButton";
+import Square from "../components/Square";
 
 const Board: FC = () => {
   const socket = useSocket();
